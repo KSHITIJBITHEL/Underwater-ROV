@@ -65,17 +65,20 @@ All the electronic equipments are housed inside a big PVC pipe sealed with 3D pr
 
 <ins>**Crack Detection**</ins> : We have implemented a crack detection algorithm using OpenCV libraries in which we first remove noise from the image using gaussian blurring and compensate for the poor lighting using adaptive thresholding, then we calculate the length of contour to estimate if a crack is present or not. If a crack is present, we store the image of the crack with the location for future reference. The algorithm flow and its demonstration can be seen below.
 <p align="center" width = "100%">
-  <img width="40%" height="300" src="https://github.com/KSHITIJBITHEL/Underwater-ROV/assets/32517082/463a3754-3650-42a0-a60b-81647e750c99">
+  <img width="40%" height="300" src="https://github.com/KSHITIJBITHEL/Underwater-ROV/assets/32517082/9c95cf24-9c0f-4617-bfa4-113a7ae303dd">
   <img width="40%" height="300" src="https://github.com/KSHITIJBITHEL/Underwater-ROV/assets/32517082/ccc60b32-9a55-4523-a986-dbe000a66e5b">
   
   </br>
-  Fig 3 : a)Flow chart of crack detection algorithm b)Video demonstration on a wall crack  
+  Fig 8 : a)Flow chart of crack detection algorithm b)Video demonstration on a wall crack  
 </p>
-![CRACK DETECTION ALGORITHM-4-2](https://github.com/KSHITIJBITHEL/Underwater-ROV/assets/32517082/be90f421-8b5d-4648-beda-16191e201716)
 
 ### <ins>Hardware Protoype</ins>
-Due to the limited availablility of resources amidst COVID regulations, we built a proof of concept hardware prototype without the cameras, pressure sensor, ph sensor and the marine growth removal mechanism as shown in fig?. We tested the same in a small tank in our college and it can be seen in the video below.
-(prototype vid and photo)
+Due to the limited availablility of resources amidst COVID regulations, we built a proof of concept hardware prototype without the cameras, pressure sensor, ph sensor and the marine growth removal mechanism. We tested the same in a small tank in our college and it can be seen in the gif below.
+<p align="center">
+  <img width="460" height="300" src="">
+  </br>
+  Fig 9 : Testing the prototype
+</p>
 
 ### <ins>Results</ins>
 We showcased our work in Smart India Hackathon 2020 : Hardware edition, held online due to COVID Regulations and were regarded as the winner<sup>[[3]](https://www.sih.gov.in/hardwareFinalResult2020)</sup> among the 30+ teams competing for the same problem statement.
