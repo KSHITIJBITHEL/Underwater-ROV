@@ -47,7 +47,7 @@ The body is built to be streamlined in shape for easy maneuverability underwater
 
 ### <ins>Electrical Subsystem</ins>
 <ins>**Components Used**</ins> : 2 cameras (Arducomp 16MP IMX298 MIPI) - one mounted in front, with 1DoF actuation using servo motor, other mounted on side for visual observation and navigation,pressure sensor for depth measurement, Ping sonar echosounder for obstacle avoidance in turbid waters, pH sensor for pH measurement, 1 IMU (MPU9250) for pose estimation and control of ROV, Arduino Mega is used as the microcontroller, Raspberry Pi is used as the onboard computer and communication is performed via ethernet cable from ROV to the control centre.</br>
-All the electronic equipments are housed inside a big PVC pipe sealed with 3D printed lids at the centre of ROV, as can be seen in design(Fig2) and the hardware prototype built(Fig?).
+All the electronic equipments are housed inside a big PVC pipe sealed with 3D printed lids at the centre of ROV, as can be seen in design(Fig2) and the hardware prototype built(Fig9).
 
 <ins>**Localization**</ins> : Underwater localization is a very challenging problem due to high attenuation of electro-magnetic waves, that too inside a tunnel. Considering that in mind, we propose a tracker based visual feedback localization algorithm which requires one time installation of trackers at known locations inside the tunnel using which a look-up table can be generated for referencing the location with the corresponding tracker. To detect the tracker, we've applied blob detection feature from OpenCV library, and the algorithm can be seen in action below.
 <p align="center">
@@ -75,7 +75,7 @@ All the electronic equipments are housed inside a big PVC pipe sealed with 3D pr
 ### <ins>Hardware Protoype</ins>
 Due to the limited availablility of resources amidst COVID regulations, we built a proof of concept hardware prototype without the cameras, pressure sensor, ph sensor and the marine growth removal mechanism. We tested the same in a small tank in our college and it can be seen in the gif below.
 <p align="center">
-  <img width="460" height="300" src="">
+  <img width="460" height="300" src="prototype_short.gif">
   </br>
   Fig 9 : Testing the prototype
 </p>
@@ -84,3 +84,5 @@ Due to the limited availablility of resources amidst COVID regulations, we built
 We showcased our work in Smart India Hackathon 2020 : Hardware edition, held online due to COVID Regulations and were regarded as the winner<sup>[[3]](https://www.sih.gov.in/hardwareFinalResult2020)</sup> among the 30+ teams competing for the same problem statement.
 
 **<ins>Team</ins>** - Tabish Madni(Team Leader, Design & Fabrication), Shubham Malviya(Design & Fabrication), Samarth Koolwal(Design & Fabrication), Ruchika Guntewar(Desgign & Presentation), Allu Vamsi Vishal(Electronics & Communication), Kshitij Bithel(Software & Controls)
+
+Submitted video explaining each element can be found on [Youtube](https://youtu.be/iROQO7fXtlE?si=Ke6OAFSvWtDwZo-D)
