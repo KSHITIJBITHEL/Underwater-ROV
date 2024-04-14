@@ -24,9 +24,9 @@ According to the problem statement<sup>[[2]](https://github.com/robinsdeepak/SIH
 
 <ins>**Thrusters**</ins> : The thruster assembly consists of a propeller, a duct and a motor housing, the cross section of the propellers is made in aerofoil shape considering the aerodynamics in mind. The overall system consists of 2 sets of thrusters, one facind in forward direction and the other in upward direction. Both the sets consist of 1 RHS and 1 LHS type propeller to balance the angular momentum. The following gif showcases a single thruster assembly in the design along with its components.
 <p align="center">
-  <img width="460" height="300" src="">
+  <img width="460" height="300" src="https://github.com/KSHITIJBITHEL/Underwater-ROV/assets/32517082/dbe5ed23-a5e8-47ba-bda7-2197254d7d2f">
   </br>
-  Fig 3 : 
+  Fig 3 : Thruster Assembly
 </p>
 
 <ins>**Marine growth removal mechanism**</ins> : We have designed a helix based mechanism with an abrasive outer covering for removing marine growth from the tunnel walls. The design of the mechanism and the placement of motor and bearing is shown in the following gif
