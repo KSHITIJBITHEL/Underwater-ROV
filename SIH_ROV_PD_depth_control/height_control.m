@@ -1,0 +1,158 @@
+function [t_out, z_out] = height_control(trajhandle, controlhandle)
+
+addpath('utils');
+
+video = false;
+video_filename = 'height_control.avi';
+
+params = sys_params;
+
+% real-time
+real_time = true;
+
+%% **************************** FIGURES *****************************
+disp('Initializing figures...')
+if video
+  video_writer = VideoWriter(video_filename, 'Uncompressed AVI');
+  open(video_writer);
+end
+h_fig = figure;
+sz = [1000 600]; % figure size
+screensize = get(0,'ScreenSize');
+xpos = ceil((screensize(3)-sz(1))/2); % center the figure on the screen horizontally
+ypos = ceil((screensize(4)-sz(2))/2); % center the figure on the screen vertically
+set(h_fig, 'Position', [xpos ypos sz])
+
+h_3d = subplot(1,2,1);
+axis equal
+grid on
+view(0,0);
+xlabel('x [m]'); ylabel('y [m]'); zlabel('z [m]');
+
+h_2d = subplot(1,2,2);
+plot_2d = plot(h_2d, 0, 0);
+grid on;
+xlabel('t [s]'); ylabel('z [m]');
+
+rov_colors = lines(1);
+
+set(gcf,'Renderer','OpenGL')
+
+%% *********************** INITIAL CONDITIONS ***********************
+max_iter  = 100;       % max iteration
+starttime = 0;         % start of simulation in seconds
+tstep     = 0.01;      % this determines the time step at which the solution is given
+cstep     = 0.05;      % image capture time interval
+nstep     = cstep/tstep;
+time      = starttime; % current time
+% Get start and stop position
+des_start = trajhandle(0);
+des_stop  = trajhandle(inf);
+stop_pos  = des_stop(1);
+x0        = des_start;
+xtraj     = nan(max_iter*nstep, length(x0));
+ttraj     = nan(max_iter*nstep, 1);
+
+x         = x0;        % state
+
+pos_tol   = 0.01;
+vel_tol   = 0.01;
+answer = inputdlg( {'Enter z_des:'},'Input',1,{'20','hsv'});
+z_des = str2num(answer{1})
+trajhandle = @(t) fixed_set_point(t, z_des);
+  
+%% ************************* RUN SIMULATION *************************
+disp('Simulation Running....')
+% Main loop
+for iter = 1:max_iter
+  timeint = time:tstep:time+cstep;
+  tic;
+  % Initialize rov plot
+  if iter == 1
+    subplot(1,2,1);
+    rov_state = simStateToROVState(x0);
+    QP = ROVPlot(1, rov_state, params.arm_length, 0.05, rov_colors(1,:), max_iter, h_3d);
+    rov_state = simStateToROVState(x);
+    QP.UpdateROVPlot(rov_state, time);
+    h_title = title(h_3d, sprintf('iteration: %d, time: %4.2f', iter, time));
+  end
+
+  % Run simulation
+  [tsave, xsave] = ode45(@(t,s) sys_eom(t, s, controlhandle, trajhandle, params), timeint, x);
+  x = xsave(end, :)';
+
+  % Save to traj
+  xtraj((iter-1)*nstep+1:iter*nstep,:) = xsave(1:end-1,:);
+  ttraj((iter-1)*nstep+1:iter*nstep) = tsave(1:end-1);
+
+  % Update rov plot
+  subplot(1,2,1)
+  rov_state = simStateToROVState(x);
+  QP.UpdateROVPlot(rov_state, time + cstep);
+  set(h_title, 'String', sprintf('iteration: %d, time: %4.2f', iter, time + cstep))
+  time = time + cstep; % Update simulation time
+
+  set(plot_2d, 'XData', ttraj(1:iter*nstep), 'YData', xtraj(1:iter*nstep,1));
+  if video
+    writeVideo(video_writer, getframe(h_fig));
+  end
+
+  t = toc;
+  % Check to make sure ode45 is not timing out
+  if(t > cstep*50)
+    err = 'Ode solver took too long for a step. Maybe the controller is unstable.';
+    disp(err);
+    break;
+  end
+
+  % Pause to make real-time
+  if real_time && (t < cstep)
+    pause(cstep - t);
+  end
+
+end
+%Display final state
+fprintf('depth: %d m, heave: %d m/sec',x(1),x(2));
+disp(' ');
+disp('Simulation done');
+if video
+  close(video_writer);
+end
+
+t_out = ttraj(1:iter*nstep);
+z_out = xtraj(1:iter*nstep,1);
+% Create a figure window
+fig = uifigure('Name', 'Wanna run again?');
+
+btn = uibutton(fig,'push',...
+               'Position',[50 200 200 200],...
+               'BackgroundColor',[0.9290 0.6940 0.1250],...
+                'FontWeight','bold',...
+               'ButtonPushedFcn', @(btn,event) plotButtonPushed(btn));
+btn.Text= 'Yes';
+btn2 = uibutton(fig,'push',...
+                'Position',[300 200 200 200],...
+                'BackgroundColor',[0.9290 0.6940 0.1250],...
+                'FontWeight','bold',...
+               'ButtonPushedFcn', @(btn,event) btnpushed());
+btn2.Text= 'NO';
+% Create the function for the ButtonPushedFcn callback
+function plotButtonPushed(btn)
+        % Given trajectory generator
+        trajhandle = @(t) fixed_set_point(t, z_des);
+        closereq();
+        closereq();
+        % This is your controller
+        controlhandle = @controller;
+
+        % Run simulation with given trajectory generator and controller
+        [t, z] = height_control(trajhandle, controlhandle);
+end
+    function btnpushed()
+            closereq(); 
+            closereq(); 
+            disp('end');
+    end
+
+end
+
