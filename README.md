@@ -51,24 +51,27 @@ All the electronic equipments are housed inside a big PVC pipe sealed with 3D pr
 
 <ins>**Localization**</ins> : Underwater localization is a very challenging problem due to high attenuation of electro-magnetic waves, that too inside a tunnel. Considering that in mind, we propose a tracker based visual feedback localization algorithm which requires one time installation of trackers at known locations inside the tunnel using which a look-up table can be generated for referencing the location with the corresponding tracker. To detect the tracker, we've applied blob detection feature from OpenCV library, and the algorithm can be seen in action below.
 <p align="center">
-  <img width="460" height="300" src="">
+  <img width="460" height="300" src="https://github.com/KSHITIJBITHEL/Underwater-ROV/assets/32517082/4bc28e5f-d382-4cb3-ae9c-69a985ed6ee9">
   </br>
-  Fig 3 : 
+  Fig 6 : Tracker based localization technique 
 </p>
 
 <ins>**Contols**</ins> : We have implemented a PD based auto-depth and auto-heading controller using feedback from pressure sensor for depth and IMU for heading. An example demonstration of the controller simulated using Matlab can be seen below
 <p align="center">
-  <img width="460" height="300" src="">
+  <img width="460" height="300" src="https://github.com/KSHITIJBITHEL/Underwater-ROV/assets/32517082/4e104fae-02ce-49bb-b931-b0ad53d48149">
   </br>
-  Fig 3 : 
+  Fig 7 : P-D based depth control of ROV
 </p>
 
-<ins>**Crack Detection**</ins> : We have implemented a crack detection algorithm using OpenCV libraries in which we first remove noise from the image using gaussian blurring and compensate for the poor lighting using adaptive thresholding, then we calculate the length of contour to estimate if a crack is present or not. The alorithm flow and its demonstration can be seen below.
-<p align="center">
-  <img width="460" height="300" src="">
+<ins>**Crack Detection**</ins> : We have implemented a crack detection algorithm using OpenCV libraries in which we first remove noise from the image using gaussian blurring and compensate for the poor lighting using adaptive thresholding, then we calculate the length of contour to estimate if a crack is present or not. If a crack is present, we store the image of the crack with the location for future reference. The algorithm flow and its demonstration can be seen below.
+<p align="center" width = "100%">
+  <img width="40%" height="300" src="https://github.com/KSHITIJBITHEL/Underwater-ROV/assets/32517082/463a3754-3650-42a0-a60b-81647e750c99">
+  <img width="40%" height="300" src="https://github.com/KSHITIJBITHEL/Underwater-ROV/assets/32517082/ccc60b32-9a55-4523-a986-dbe000a66e5b">
+  
   </br>
-  Fig 3 : 
+  Fig 3 : a)Flow chart of crack detection algorithm b)Video demonstration on a wall crack  
 </p>
+![CRACK DETECTION ALGORITHM-4-2](https://github.com/KSHITIJBITHEL/Underwater-ROV/assets/32517082/be90f421-8b5d-4648-beda-16191e201716)
 
 ### <ins>Hardware Protoype</ins>
 Due to the limited availablility of resources amidst COVID regulations, we built a proof of concept hardware prototype without the cameras, pressure sensor, ph sensor and the marine growth removal mechanism as shown in fig?. We tested the same in a small tank in our college and it can be seen in the video below.
